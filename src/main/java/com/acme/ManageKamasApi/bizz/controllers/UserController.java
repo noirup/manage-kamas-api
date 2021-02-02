@@ -5,6 +5,7 @@ import com.acme.ManageKamasApi.dal.dao.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,16 +14,19 @@ import java.util.Objects;
 /**
  * User Controller.
  */
-@CrossOrigin(origins = {"http://localhost:3000/", "https://manage-kamas.herokuapp.com/"})
 @RestController
 @RequestMapping("/user/")
 public class UserController {
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private PasswordEncoder passwordEncoderBean;
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody UserDto user) {
+
+        user.setPassword(passwordEncoderBean.encode(user.getPassword()));
 
         UserDto newUser = userService.registerNewUser(user);
 

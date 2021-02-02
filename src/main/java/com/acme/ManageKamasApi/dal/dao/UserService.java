@@ -3,8 +3,11 @@ package com.acme.ManageKamasApi.dal.dao;
 import com.acme.ManageKamasApi.bizz.dto.UserDto;
 import com.acme.ManageKamasApi.dal.repositories.UserRepository;
 import com.acme.ManageKamasApi.dal.models.User;
+import com.acme.ManageKamasApi.bizz.dto.JwtUserDetails;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -42,4 +45,9 @@ public class UserService implements IUserService{
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        User user = userRepository.findByLogin(login);
+        return new JwtUserDetails(user.getId(), user.getLogin(), user.getPassword(), "ROLE_USER_2");
+    }
 }
