@@ -26,4 +26,20 @@ public class UserService implements IUserService{
         }
         return users;
     }
+
+    @Override
+    public UserDto registerNewUser(UserDto userDto) {
+        User user = modelMapper.map(userDto, User.class);
+        if (userExist(user.getLogin())) {
+            return null;
+        }
+        user = userRepository.save(user);
+        return modelMapper.map(user, UserDto.class);
+    }
+
+    private boolean userExist(String login) {
+        return userRepository.findByLogin(login) != null;
+    }
+
+
 }
