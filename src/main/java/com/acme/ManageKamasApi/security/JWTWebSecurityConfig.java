@@ -32,10 +32,11 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtTokenAuthorizationOncePerRequestFilter jwtAuthenticationTokenFilter;
 
-    @Value("${jwt.get.token.uri}")
+    @Value("/user${jwt.get.token.uri}")
     private String authenticationPath;
 
-    private String registrationPath = "/user/register";
+    @Value("/user${jwt.register.token.uri}")
+    private String registrationPath;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -93,13 +94,13 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
             )
             .and()
             .ignoring()
-            .antMatchers("/h2-console/**/**")
+            .antMatchers("/h2-console/**/**")//Should not be in Production!
             .and()
             .ignoring()
             .antMatchers(
                     HttpMethod.POST,
                     registrationPath
-            );//Should not be in Production!
+            );
     }
 }
 
