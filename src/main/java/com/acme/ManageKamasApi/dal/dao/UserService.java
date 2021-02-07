@@ -19,7 +19,6 @@ public class UserService implements IUserService{
 
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     ModelMapper modelMapper;
 

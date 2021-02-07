@@ -24,6 +24,7 @@ import java.util.Objects;
 /**
  * User Controller.
  */
+//@CrossOrigin(origins = {"http://localhost:3000", "https://manage-kamas.herokuapp.com/login"})
 @RestController
 @RequestMapping("/user/")
 public class UserController {
@@ -46,6 +47,10 @@ public class UserController {
 
         authenticate(authenticationRequest.getLogin(), authenticationRequest.getPassword());
 
+        return authenticateUser(authenticationRequest);
+    }
+
+    private ResponseEntity<?> authenticateUser(UserDto authenticationRequest) {
         final UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getLogin());
 
         final String token = jwtTokenUtil.generateToken(userDetails);
@@ -86,12 +91,12 @@ public class UserController {
         }
     }
 
-    @PostMapping("/register")
+    @PostMapping("${jwt.register.token.uri}")
     public ResponseEntity<?> register(@RequestBody UserDto user) {
 
         UserDto newUser = userService.registerNewUser(user);
 
-        return Objects.nonNull(newUser) ? createAuthenticationToken(newUser) : ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        return Objects.nonNull(newUser) ? authenticateUser(newUser) : ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
     /**

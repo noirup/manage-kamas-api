@@ -6,12 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * User Entity.
  */
 @Entity
-@Table(name = "user", schema = "public")
+@Table(name = "users", schema = "public")
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -32,6 +33,17 @@ public class User {
     @Setter
     @Column(name = "password")
     private String password;
+    @Getter
+    @Setter
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "user_servers",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "server_id"))
+    private Set<Server> servers;
 
     /**
      * Default constructor.
@@ -39,11 +51,13 @@ public class User {
      * @param login     login
      * @param email     email
      * @param password  password
+     * @param servers   servers
      */
-    public User(int id, String login, String email, String password) {
+    public User(int id, String login, String email, String password, Set<Server> servers) {
         this.id = id;
         this.login = login;
         this.email = email;
         this.password = password;
+        this.servers = servers;
     }
 }

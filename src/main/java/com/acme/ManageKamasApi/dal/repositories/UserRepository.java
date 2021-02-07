@@ -7,9 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * User Repository: extends the crud repository and allows crud operations on users.
  */
-public interface UserRepository extends CrudRepository<User, Integer> {
+public interface UserRepository extends CrudRepository<User, Long> {
 
-    @Query("SELECT new com.acme.ManageKamasApi.dal.models.User(u.id, u.login, u.email, u.password) FROM User u " +
-            "WHERE u.login = ?1")
     User findByLogin(String login);
 }
