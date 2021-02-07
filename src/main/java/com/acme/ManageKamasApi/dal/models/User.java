@@ -35,15 +35,17 @@ public class User {
     private String password;
     @Getter
     @Setter
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_servers",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "server_id"))
     private Set<Server> servers;
+    @Getter
+    @Setter
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "user")
+    private Set<Dungeon> dungeons;
 
     /**
      * Default constructor.

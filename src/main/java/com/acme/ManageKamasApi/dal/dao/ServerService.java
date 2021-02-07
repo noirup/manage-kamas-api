@@ -15,8 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class ServerService implements IServerService {
-
+public class ServerService extends AbstractService implements IServerService {
     @Autowired
     ServerRepository serverRepository;
     @Autowired
@@ -26,11 +25,7 @@ public class ServerService implements IServerService {
 
     @Override
     public List<ServerDto> getAllServers() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = null;
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            user = userRepository.findByLogin(authentication.getName());
-        }
+        User user = getCurrentUser();
         List<ServerDto> servers = new ArrayList<>();
         user.getServers().forEach(s -> servers.add(modelMapper.map(s, ServerDto.class)));
         return servers;
@@ -38,11 +33,7 @@ public class ServerService implements IServerService {
 
     @Override
     public boolean addServer(ServerDto serverDto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = null;
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            user = userRepository.findByLogin(authentication.getName());
-        }
+        User user = getCurrentUser();
         Server server = modelMapper.map(serverDto, Server.class);
         Server newServer = serverRepository.findByServerName(server.getServerName());
         if (Objects.isNull(newServer)) {

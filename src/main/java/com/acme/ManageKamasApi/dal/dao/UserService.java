@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserService implements IUserService{
+public class UserService extends AbstractService implements IUserService{
 
     @Autowired
     UserRepository userRepository;

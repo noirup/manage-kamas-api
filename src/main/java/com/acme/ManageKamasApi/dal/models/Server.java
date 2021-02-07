@@ -28,22 +28,14 @@ public class Server {
     @Getter
     @Setter
     @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
             mappedBy = "servers")
     private Set<User> users;
-
-    /**
-     * Default constructor.
-     * @param id        id
-     * @param serverName     server name
-     */
-    public Server(int id, String serverName) {
-        this.id = id;
-        this.serverName = serverName;
-    }
+    @Getter
+    @Setter
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "server")
+    private Set<Dungeon> dungeons;
 
     /**
      * Default constructor.

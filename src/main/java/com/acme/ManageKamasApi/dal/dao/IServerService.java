@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IServerService {
 
-    public List<ServerDto> getAllServers();
+    List<ServerDto> getAllServers();
 
-    public boolean addServer(ServerDto serverDto);
+    boolean addServer(ServerDto serverDto);
 }
