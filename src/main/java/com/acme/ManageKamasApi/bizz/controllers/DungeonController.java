@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@CrossOrigin(origins = {"http://localhost:3000", "https://manage-kamas.herokuapp.com/login"})
+//@CrossOrigin(origins = {"http://localhost:3000", "https://manage-kamas.herokuapp.com/"})
 @RestController
 @RequestMapping("/dungeon/")
 public class DungeonController {
@@ -20,7 +20,7 @@ public class DungeonController {
     @Autowired
     ModelMapper modelMapper;
 
-    @GetMapping("/get_dungeons")
+    @PostMapping("/get_dungeons")
     public List<DungeonDto> getDungeonList(@RequestBody ServerDto serverDto) {
         return dungeonService.getAllDungeons(serverDto);
     }

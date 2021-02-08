@@ -24,7 +24,7 @@ import java.util.Objects;
 /**
  * User Controller.
  */
-//@CrossOrigin(origins = {"http://localhost:3000", "https://manage-kamas.herokuapp.com/login"})
+//@CrossOrigin(origins = {"http://localhost:3000", "https://manage-kamas.herokuapp.com/"})
 @RestController
 @RequestMapping("/user/")
 public class UserController {

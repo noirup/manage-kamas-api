@@ -13,7 +13,7 @@ import java.util.Objects;
 /**
  * Server Controller.
  */
-//@CrossOrigin(origins = {"http://localhost:3000", "https://manage-kamas.herokuapp.com/login"})
+//@CrossOrigin(origins = {"http://localhost:3000", "https://manage-kamas.herokuapp.com/"})
 @RestController
 @RequestMapping("/server/")
 public class ServerController {
