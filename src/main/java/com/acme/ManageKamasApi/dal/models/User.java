@@ -35,10 +35,8 @@ public class User {
     private String password;
     @Getter
     @Setter
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_servers",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "server_id"))
+    @ManyToMany(fetch = FetchType.LAZY,
+            mappedBy = "users")
     private Set<Server> servers;
     @Getter
     @Setter

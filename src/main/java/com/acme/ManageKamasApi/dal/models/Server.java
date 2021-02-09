@@ -27,8 +27,10 @@ public class Server {
     private String serverName;
     @Getter
     @Setter
-    @ManyToMany(fetch = FetchType.LAZY,
-            mappedBy = "servers")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_servers",
+            joinColumns = @JoinColumn(name = "server_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;
     @Getter
     @Setter

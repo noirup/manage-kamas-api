@@ -1,6 +1,5 @@
 package com.acme.ManageKamasApi.bizz.dto;
 
-import com.acme.ManageKamasApi.dal.models.Dungeon;
 import com.sun.istack.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor

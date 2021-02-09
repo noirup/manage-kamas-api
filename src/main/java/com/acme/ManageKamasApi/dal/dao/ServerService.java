@@ -7,9 +7,6 @@ import com.acme.ManageKamasApi.dal.repositories.ServerRepository;
 import com.acme.ManageKamasApi.dal.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -40,18 +37,9 @@ public class ServerService extends AbstractService implements IServerService {
             newServer = serverRepository.save(server);
         }
         if (Objects.isNull(newServer.getUsers())) {
-            Set<User> users = new HashSet<User>();
-            users.add(user);
-            newServer.setUsers(users);
-        }
-        if (Objects.isNull(user.getServers())) {
-            Set<Server> servers = new HashSet<Server>();
-            servers.add(newServer);
-            user.setServers(servers);
+            newServer.setUsers(new HashSet<>());
         }
         newServer.getUsers().add(user);
-        user.getServers().add(newServer);
-        userRepository.save(user);
-        return true;
+        return Objects.nonNull(serverRepository.save(newServer));
     }
 }

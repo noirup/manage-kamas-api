@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "dungeons", schema = "public")
@@ -35,6 +36,12 @@ public class Dungeon {
     @JoinColumn(name="user_id", nullable=false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
+    @Getter
+    @Setter
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "dungeon")
+    private Set<DailyKamas> dailyKamasList;
 
     /**
      * Default constructor.
