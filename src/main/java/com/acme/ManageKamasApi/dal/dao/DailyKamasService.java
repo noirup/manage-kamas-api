@@ -40,4 +40,11 @@ public class DailyKamasService implements IDailyKamasService {
         dailyKamas = dailyKamasRepository.save(dailyKamas);
         return Objects.nonNull(dailyKamas) ? getAllDailyKamas(dailyKamasDto.getDungeonDto()) : null;
     }
+
+    @Override
+    public void deleteDailyKamas(List<DailyKamasDto> dailyKamasDto) {
+        dailyKamasDto.forEach(d -> {
+            dailyKamasRepository.deleteById(d.getId());
+        });
+    }
 }

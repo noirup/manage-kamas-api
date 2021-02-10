@@ -36,4 +36,11 @@ public class DailyKamasController {
         return Objects.nonNull(dailyKamas) ?
                 ResponseEntity.ok(dailyKamas) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @PostMapping("/delete_daily_kamas")
+    public ResponseEntity<?> deleteDailyKamas(@RequestBody List<DailyKamasDto> dailyKamasDtos) {
+        dailyKamasService.deleteDailyKamas(dailyKamasDtos);
+        return ResponseEntity.ok(dailyKamasService.getAllDailyKamas(dailyKamasDtos.stream()
+                .filter(d -> Objects.nonNull(d.getDungeonDto())).findFirst().get().getDungeonDto()));
+    }
 }

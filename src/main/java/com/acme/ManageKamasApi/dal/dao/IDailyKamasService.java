@@ -9,4 +9,6 @@ public interface IDailyKamasService {
     List<DailyKamasDto> getAllDailyKamas(DungeonDto dungeonDto);
 
     List<DailyKamasDto> addDailyKamas(DailyKamasDto dailyKamasDto);
+
+    void deleteDailyKamas(List<DailyKamasDto> dailyKamasDto);
 }
