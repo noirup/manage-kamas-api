@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Server entity.
@@ -31,13 +31,13 @@ public class Server {
     @JoinTable(name = "user_servers",
             joinColumns = @JoinColumn(name = "server_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> users;
+    private List<User> users;
     @Getter
     @Setter
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "server")
-    private Set<Dungeon> dungeons;
+    private List<Dungeon> dungeons;
 
     /**
      * Default constructor.
@@ -45,7 +45,7 @@ public class Server {
      * @param serverName     server name
      * @param users     users
      */
-    public Server(int id, String serverName, Set<User> users) {
+    public Server(int id, String serverName, List<User> users) {
         this.id = id;
         this.serverName = serverName;
         this.users = users;

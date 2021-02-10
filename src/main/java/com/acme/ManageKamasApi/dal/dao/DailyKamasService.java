@@ -26,7 +26,7 @@ public class DailyKamasService implements IDailyKamasService {
     @Override
     public List<DailyKamasDto> getAllDailyKamas(DungeonDto dungeonDto) {
         Dungeon dungeon = dungeonRepository.findById(dungeonDto.getId()).get();
-        List<DailyKamas> dailyKamasList = dailyKamasRepository.findByDungeon(dungeon);
+        List<DailyKamas> dailyKamasList = dailyKamasRepository.findByDungeonOrderByEntryDateDesc(dungeon);
         List<DailyKamasDto> list = new ArrayList<>();
         dailyKamasList.forEach(dk -> {
             list.add(modelMapper.map(dk, DailyKamasDto.class));

@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 /**
  * User Entity.
@@ -37,13 +37,13 @@ public class User {
     @Setter
     @ManyToMany(fetch = FetchType.LAZY,
             mappedBy = "users")
-    private Set<Server> servers;
+    private List<Server> servers;
     @Getter
     @Setter
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "user")
-    private Set<Dungeon> dungeons;
+    private List<Dungeon> dungeons;
 
     /**
      * Default constructor.
@@ -53,7 +53,7 @@ public class User {
      * @param password  password
      * @param servers   servers
      */
-    public User(int id, String login, String email, String password, Set<Server> servers) {
+    public User(int id, String login, String email, String password, List<Server> servers) {
         this.id = id;
         this.login = login;
         this.email = email;

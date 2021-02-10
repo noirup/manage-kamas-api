@@ -37,7 +37,7 @@ public class ServerService extends AbstractService implements IServerService {
             newServer = serverRepository.save(server);
         }
         if (Objects.isNull(newServer.getUsers())) {
-            newServer.setUsers(new HashSet<>());
+            newServer.setUsers(new ArrayList<>());
         }
         newServer.getUsers().add(user);
         return Objects.nonNull(serverRepository.save(newServer));

@@ -29,7 +29,7 @@ public class DungeonService extends AbstractService implements IDungeonService {
         User user = getCurrentUser();
         Server server = serverRepository.findByServerName(serverDto.getServerName());
         List<DungeonDto> dungeons = new ArrayList<>();
-        dungeonRepository.findByServerAndUser(server, user)
+        dungeonRepository.findByServerAndUserOrderByDungeonNameAsc(server, user)
                 .forEach(d -> dungeons.add(modelMapper.map(d, DungeonDto.class)));
         return dungeons;
     }

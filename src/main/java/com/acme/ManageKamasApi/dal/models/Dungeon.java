@@ -8,7 +8,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "dungeons", schema = "public")
@@ -41,7 +41,7 @@ public class Dungeon {
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "dungeon")
-    private Set<DailyKamas> dailyKamasList;
+    private List<DailyKamas> dailyKamasList;
 
     /**
      * Default constructor.

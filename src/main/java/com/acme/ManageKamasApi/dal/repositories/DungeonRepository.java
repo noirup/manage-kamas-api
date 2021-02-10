@@ -8,5 +8,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface DungeonRepository extends CrudRepository<Dungeon, Long> {
-    List<Dungeon> findByServerAndUser(Server server, User user);
+    List<Dungeon> findByServerAndUserOrderByDungeonNameAsc(Server server, User user);
 }
