@@ -1,7 +1,7 @@
 package com.acme.ManageKamasApi.dal.dao;
 
-import com.acme.ManageKamasApi.bizz.dto.DailyKamasDto;
-import com.acme.ManageKamasApi.bizz.dto.DungeonDto;
+import com.acme.ManageKamasApi.bizz.dto.dailykamas.DailyKamasDto;
+import com.acme.ManageKamasApi.bizz.dto.dungeons.DungeonDto;
 
 import java.util.List;
 

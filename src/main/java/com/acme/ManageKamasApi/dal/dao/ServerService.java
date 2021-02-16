@@ -1,31 +1,44 @@
 package com.acme.ManageKamasApi.dal.dao;
 
-import com.acme.ManageKamasApi.bizz.dto.ServerDto;
+import com.acme.ManageKamasApi.bizz.dto.servers.ServerSubClassesDto;
+import com.acme.ManageKamasApi.bizz.dto.servers.ServerDto;
 import com.acme.ManageKamasApi.dal.models.Server;
 import com.acme.ManageKamasApi.dal.models.User;
+import com.acme.ManageKamasApi.dal.repositories.DungeonRepository;
 import com.acme.ManageKamasApi.dal.repositories.ServerRepository;
-import com.acme.ManageKamasApi.dal.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static java.util.stream.Collectors.toList;
+
+/**
+ * Server service.
+ */
 @Service
 public class ServerService extends AbstractService implements IServerService {
     @Autowired
     ServerRepository serverRepository;
     @Autowired
-    UserRepository userRepository;
+    DungeonRepository dungeonRepository;
     @Autowired
     ModelMapper modelMapper;
 
     @Override
     public List<ServerDto> getAllServers() {
-        User user = getCurrentUser();
-        List<ServerDto> servers = new ArrayList<>();
-        user.getServers().forEach(s -> servers.add(modelMapper.map(s, ServerDto.class)));
-        return servers;
+        return getCurrentUser().getServers().stream().map(s -> modelMapper.map(s, ServerDto.class)).collect(toList());
+    }
+
+    @Override
+    public List<ServerSubClassesDto> getServListWithSubObjects() {
+        User currentUser = getCurrentUser();
+        List<Server> servers = currentUser.getServers();
+        for (Server s : servers) {
+            s.setDungeons(dungeonRepository.findByServerAndUserOrderByDungeonNameAsc(s, currentUser));
+        }
+        return servers.stream().map(s -> modelMapper.map(s, ServerSubClassesDto.class)).collect(toList());
     }
 
     @Override

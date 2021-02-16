@@ -1,7 +1,7 @@
 package com.acme.ManageKamasApi.bizz.controllers;
 
-import com.acme.ManageKamasApi.bizz.dto.DungeonDto;
-import com.acme.ManageKamasApi.bizz.dto.ServerDto;
+import com.acme.ManageKamasApi.bizz.dto.dungeons.DungeonDto;
+import com.acme.ManageKamasApi.bizz.dto.servers.ServerDto;
 import com.acme.ManageKamasApi.dal.dao.IDungeonService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,6 @@ import java.util.List;
 public class DungeonController {
     @Autowired
     private IDungeonService dungeonService;
-    @Autowired
-    ModelMapper modelMapper;
 
     @PostMapping("/get_dungeons")
     public List<DungeonDto> getDungeonList(@RequestBody ServerDto serverDto) {
@@ -27,8 +25,6 @@ public class DungeonController {
 
     @PostMapping("/add_dungeon")
     public ResponseEntity<?> addDungeon(@RequestBody DungeonDto dungeonDto) {
-        return dungeonService.addDungeon(dungeonDto) ?
-                ResponseEntity.ok(dungeonService.getAllDungeons(modelMapper.map(dungeonDto.getServer(), ServerDto.class)))
-                : ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        return ResponseEntity.ok(dungeonService.addDungeon(dungeonDto));
     }
 }

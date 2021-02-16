@@ -1,7 +1,7 @@
 package com.acme.ManageKamasApi.dal.dao;
 
-import com.acme.ManageKamasApi.bizz.dto.DailyKamasDto;
-import com.acme.ManageKamasApi.bizz.dto.DungeonDto;
+import com.acme.ManageKamasApi.bizz.dto.dailykamas.DailyKamasDto;
+import com.acme.ManageKamasApi.bizz.dto.dungeons.DungeonDto;
 import com.acme.ManageKamasApi.dal.models.DailyKamas;
 import com.acme.ManageKamasApi.dal.models.Dungeon;
 import com.acme.ManageKamasApi.dal.repositories.DailyKamasRepository;
@@ -10,10 +10,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
+/**
+ * Daily kamas service
+ */
 @Service
 public class DailyKamasService implements IDailyKamasService {
     @Autowired
@@ -27,17 +30,12 @@ public class DailyKamasService implements IDailyKamasService {
     public List<DailyKamasDto> getAllDailyKamas(DungeonDto dungeonDto) {
         Dungeon dungeon = dungeonRepository.findById(dungeonDto.getId()).get();
         List<DailyKamas> dailyKamasList = dailyKamasRepository.findByDungeonOrderByEntryDateDesc(dungeon);
-        List<DailyKamasDto> list = new ArrayList<>();
-        dailyKamasList.forEach(dk -> {
-            list.add(modelMapper.map(dk, DailyKamasDto.class));
-        });
-        return list;
+        return dailyKamasList.stream().map(dk -> modelMapper.map(dk, DailyKamasDto.class)).collect(Collectors.toList());
     }
 
     @Override
     public List<DailyKamasDto> addDailyKamas(DailyKamasDto dailyKamasDto) {
-        DailyKamas dailyKamas = modelMapper.map(dailyKamasDto, DailyKamas.class);
-        dailyKamas = dailyKamasRepository.save(dailyKamas);
+        DailyKamas dailyKamas = dailyKamasRepository.save(modelMapper.map(dailyKamasDto, DailyKamas.class));
         return Objects.nonNull(dailyKamas) ? getAllDailyKamas(dailyKamasDto.getDungeonDto()) : null;
     }
 

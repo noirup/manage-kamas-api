@@ -1,9 +1,8 @@
 package com.acme.ManageKamasApi.bizz.controllers;
 
-import com.acme.ManageKamasApi.bizz.dto.DailyKamasDto;
-import com.acme.ManageKamasApi.bizz.dto.DungeonDto;
+import com.acme.ManageKamasApi.bizz.dto.dailykamas.DailyKamasDto;
+import com.acme.ManageKamasApi.bizz.dto.dungeons.DungeonDto;
 import com.acme.ManageKamasApi.dal.dao.IDailyKamasService;
-import com.acme.ManageKamasApi.dal.models.DailyKamas;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

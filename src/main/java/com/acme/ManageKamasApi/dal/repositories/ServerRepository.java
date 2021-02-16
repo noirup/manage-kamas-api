@@ -8,5 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface ServerRepository extends CrudRepository<Server, Long> {
+    @Query()
     Server findByServerName(String serverName);
 }

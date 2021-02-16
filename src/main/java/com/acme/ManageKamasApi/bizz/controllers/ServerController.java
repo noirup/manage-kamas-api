@@ -1,6 +1,7 @@
 package com.acme.ManageKamasApi.bizz.controllers;
 
-import com.acme.ManageKamasApi.bizz.dto.ServerDto;
+import com.acme.ManageKamasApi.bizz.dto.servers.ServerSubClassesDto;
+import com.acme.ManageKamasApi.bizz.dto.servers.ServerDto;
 import com.acme.ManageKamasApi.dal.dao.IServerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,11 @@ public class ServerController {
     @GetMapping("/get_servers")
     public List<ServerDto> getServerList() {
         return serverService.getAllServers();
+    }
+
+    @GetMapping("/get_sub_classes_servers")
+    public List<ServerSubClassesDto> getServListWithSubObjects() {
+        return serverService.getServListWithSubObjects();
     }
 
     @PostMapping("/add_server")
