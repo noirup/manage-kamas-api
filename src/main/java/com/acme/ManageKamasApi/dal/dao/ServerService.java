@@ -53,6 +53,8 @@ public class ServerService extends AbstractService implements IServerService {
             newServer.setUsers(new ArrayList<>());
         }
         newServer.getUsers().add(user);
-        return modelMapper.map(serverRepository.save(newServer), ServerSubClassesDto.class);
+        Server serv = serverRepository.save(newServer);
+        serv.setDungeons(dungeonRepository.findByServerAndUserOrderByDungeonNameAsc(serv, user));
+        return modelMapper.map(serv, ServerSubClassesDto.class);
     }
 }
