@@ -34,9 +34,6 @@ public class ServerController {
 
     @PostMapping("/add_server")
     public ResponseEntity<?> AddServer(@RequestBody ServerDto serverDto) {
-        return Objects.nonNull(serverDto) ? (serverService.addServer(serverDto) ?
-                ResponseEntity.ok(serverService.getAllServers())
-                : ResponseEntity.status(HttpStatus.NO_CONTENT).body(null))
-                : ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        return ResponseEntity.ok(serverService.addServer(serverDto));
     }
 }

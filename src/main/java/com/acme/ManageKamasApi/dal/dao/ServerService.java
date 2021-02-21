@@ -42,7 +42,7 @@ public class ServerService extends AbstractService implements IServerService {
     }
 
     @Override
-    public boolean addServer(ServerDto serverDto) {
+    public ServerSubClassesDto addServer(ServerDto serverDto) {
         User user = getCurrentUser();
         Server server = modelMapper.map(serverDto, Server.class);
         Server newServer = serverRepository.findByServerName(server.getServerName());
@@ -53,6 +53,6 @@ public class ServerService extends AbstractService implements IServerService {
             newServer.setUsers(new ArrayList<>());
         }
         newServer.getUsers().add(user);
-        return Objects.nonNull(serverRepository.save(newServer));
+        return modelMapper.map(serverRepository.save(newServer), ServerSubClassesDto.class);
     }
 }

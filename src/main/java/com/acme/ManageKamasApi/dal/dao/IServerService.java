@@ -9,7 +9,7 @@ public interface IServerService {
 
     List<ServerDto> getAllServers();
 
-    boolean addServer(ServerDto serverDto);
+    ServerSubClassesDto addServer(ServerDto serverDto);
 
     List<ServerSubClassesDto> getServListWithSubObjects();
 }
