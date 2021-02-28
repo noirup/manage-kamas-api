@@ -1,6 +1,7 @@
 package com.acme.ManageKamasApi.dal.dao;
 
 import com.acme.ManageKamasApi.bizz.dto.dungeons.DungeonDto;
+import com.acme.ManageKamasApi.bizz.dto.dungeons.DungeonSubClassesDto;
 import com.acme.ManageKamasApi.bizz.dto.servers.ServerDto;
 import com.acme.ManageKamasApi.dal.models.Dungeon;
 import com.acme.ManageKamasApi.dal.models.Server;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DungeonService extends AbstractService implements IDungeonService {
@@ -39,5 +41,14 @@ public class DungeonService extends AbstractService implements IDungeonService {
         Dungeon dungeon = modelMapper.map(dungeonDto, Dungeon.class);
         dungeon.setUser(user);
         return modelMapper.map(dungeonRepository.save(dungeon), DungeonDto.class);
+    }
+
+    @Override
+    public List<DungeonSubClassesDto> deleteDungeon(DungeonDto dungeon) {
+        dungeonRepository.deleteById(dungeon.getId());
+        User user = getCurrentUser();
+        Server s = modelMapper.map(dungeon.getServer(), Server.class);
+        return dungeonRepository.findByServerAndUserOrderByDungeonNameAsc(s, user).stream()
+                .map(d -> modelMapper.map(d, DungeonSubClassesDto.class)).collect(Collectors.toList());
     }
 }
